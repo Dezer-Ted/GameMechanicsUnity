@@ -3,55 +3,65 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class BirdFlyingBehavior : MonoBehaviour
 {
+    private enum PlayerState { following, idling, stopped};
     // Start is called before the first frame update
     [SerializeField]
     private Vector3 velocity;
     [SerializeField]
-    private float speed = 10;
+    private float speed;
     [SerializeField]
     private Vector3 target;
     [SerializeField]
     private float idleRange;
-
-    private enum PlayerState { following, idling, stopped};
+    [SerializeField]
+    private float idleCirclingRange;
+    [SerializeField]
     private PlayerState playerState;
+    
     private float idleAngle = 0;
-
-    private Vector3 lastTarget;
+    private Vector3 mousePos;
+    private Vector3 lastMousePos;
     void Start()
     {
-        
+        playerState = PlayerState.following;
     }
 
     // Update is called once per frame
     void Update()
     {
-        target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        target.z = 0;
-        float angle = RotateToMouse();
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePos.z = 0;
+        target = mousePos;
         switch (playerState)
         {
             case PlayerState.following:
-                FollowCursor(angle);
+                FollowTarget(RotateToMouse());
                 break;
 
             case PlayerState.idling:
-
+                idleAngle += 1;
+                SetIdleTarget();
+                FollowTarget(RotateToMouse());
                 break;
 
         }
-        lastTarget = target;
         if (CheckForIdling())
             playerState = PlayerState.idling;
-
+        else
+        {
+            playerState = PlayerState.following;
+            idleAngle = 0;
+        }
+        lastMousePos = mousePos;
         transform.position += velocity * Time.deltaTime;
 
     }
 
-    private void FollowCursor(float angle)
+    private void FollowTarget(float angle)
     {
         velocity = new Vector3(Mathf.Cos(Mathf.Deg2Rad * angle) * speed, Mathf.Sin(Mathf.Deg2Rad * angle) * speed);
     }
@@ -65,16 +75,17 @@ public class BirdFlyingBehavior : MonoBehaviour
     }
     private bool CheckForIdling()
     {
-        if (target != lastTarget)
+        if ((Mathf.Abs(mousePos.x - lastMousePos.x) > 1e-9) || (Mathf.Abs(mousePos.y - lastMousePos.y) > 1e-9))
             return false;
-        if ((target - transform.position).magnitude <= idleRange)
+
+        if ((target - transform.position).magnitude >= idleRange&&(playerState != PlayerState.idling))
             return false;
 
         return true;
     }
     private void SetIdleTarget()
     {
-        Vector3 currentPos  = transform.position;
-        currentPos += Vector3()
+        
+       target += new Vector3(Mathf.Cos(Mathf.Deg2Rad * idleAngle) * idleCirclingRange, Mathf.Sin(Mathf.Deg2Rad * idleAngle) * idleCirclingRange);
     }
 }

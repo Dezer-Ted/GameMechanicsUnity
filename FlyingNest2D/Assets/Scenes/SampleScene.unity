@@ -308,9 +308,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: {x: 0, y: 0, z: 0}
-  speed: 10
+  speed: 7
   target: {x: 0, y: 0, z: 0}
-  idleRange: 0
+  idleRange: 0.1
+  idleCirclingRange: 2
+  playerState: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
