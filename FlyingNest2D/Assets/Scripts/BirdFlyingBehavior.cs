@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 
 public class BirdFlyingBehavior : MonoBehaviour
 {
+    //Privates
     private enum PlayerState { following, idling, stopped};
     // Start is called before the first frame update
     [SerializeField]
@@ -25,6 +26,13 @@ public class BirdFlyingBehavior : MonoBehaviour
     private float idleAngle = 0;
     private Vector3 mousePos;
     private Vector3 lastMousePos;
+
+    //Public
+    public Vector3 Velocity
+    {
+        get { return velocity; }
+        private set { velocity = value; }
+    }
     void Start()
     {
         playerState = PlayerState.following;
