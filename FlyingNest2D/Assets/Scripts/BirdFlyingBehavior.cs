@@ -65,7 +65,7 @@ public class BirdFlyingBehavior : MonoBehaviour
             idleAngle = 0;
         }
         lastMousePos = mousePos;
-        transform.position += velocity * Time.deltaTime;
+        //transform.position += velocity * Time.deltaTime;
 
     }
 
