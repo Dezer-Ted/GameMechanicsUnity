@@ -6,6 +6,7 @@ public class ScrollingObject : MonoBehaviour
 {
     private Vector3 scrollingVelocity;
     
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -15,8 +16,11 @@ public class ScrollingObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Vector3 traveledDistance = new Vector3();
         scrollingVelocity = GameObject.FindGameObjectWithTag("Player").GetComponent<BirdFlyingBehavior>().Velocity;
-        transform.position += -scrollingVelocity*1.5f * Time.deltaTime;
+        traveledDistance = scrollingVelocity * Time.deltaTime;
+        gameObject.GetComponentInParent<RepeatingBackground>().ScrolledDistance += (Vector2)traveledDistance;
+        transform.position += -scrollingVelocity * 1.5f * Time.deltaTime;
         
 
     }

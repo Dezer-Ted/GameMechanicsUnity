@@ -71,7 +71,8 @@ public class BirdFlyingBehavior : MonoBehaviour
 
     private void FollowTarget(float angle)
     {
-        velocity = new Vector3(Mathf.Cos(Mathf.Deg2Rad * angle) * speed, Mathf.Sin(Mathf.Deg2Rad * angle) * speed);
+        GameObject windManager = GameObject.FindWithTag("GameManager");
+        velocity = new Vector3(Mathf.Cos(Mathf.Deg2Rad * angle) * speed, Mathf.Sin(Mathf.Deg2Rad * angle) * speed)+(Vector3)windManager.GetComponent<WindManager>().WindVelocity;
     }
 
     private float RotateToMouse()
