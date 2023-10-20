@@ -26,7 +26,7 @@ public class WindManager : MonoBehaviour
     }
     // Start is called before the first frame update
 
-    public static WindManager Instance { get; private set; }
+    public static WindManager Instance { get { return instance; } private set { instance = value; } }
     private void Awake()
     {
         if(Instance != null && Instance!=this)

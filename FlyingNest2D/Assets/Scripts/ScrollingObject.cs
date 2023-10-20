@@ -24,6 +24,7 @@ public class ScrollingObject : MonoBehaviour
     private void ApplyBirdMovement()
     {
         scrollingVelocity = GameObject.FindGameObjectWithTag("Player").GetComponent<BirdFlyingBehavior>().Velocity;
-        transform.position += (-scrollingVelocity+ (Vector3)WindManager.Instance.WindVelocity) * Time.deltaTime;
+
+        transform.position += ((-scrollingVelocity*1.5f) + (Vector3)WindManager.Instance.WindVelocity) *Time.deltaTime;
     }
 }

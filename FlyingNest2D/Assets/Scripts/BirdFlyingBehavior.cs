@@ -61,7 +61,8 @@ public class BirdFlyingBehavior : MonoBehaviour
                 {
                     currentState = PlayerState.following;
                 }
-                velocity = (Vector3)WindManager.Instance.WindVelocity;
+                RotateToMouse();
+                velocity = (Vector3)WindManager.Instance.WindVelocity/1.5f;
                 return;
 
         }
@@ -79,7 +80,7 @@ public class BirdFlyingBehavior : MonoBehaviour
 
     private void FollowTarget(float angle)
     {
-        velocity = new Vector3(Mathf.Cos(Mathf.Deg2Rad * angle) * speed, Mathf.Sin(Mathf.Deg2Rad * angle) * speed) + (Vector3)WindManager.Instance.WindVelocity;
+        velocity = new Vector3(Mathf.Cos(Mathf.Deg2Rad * angle) * speed, Mathf.Sin(Mathf.Deg2Rad * angle) * speed) +  (Vector3)WindManager.Instance.WindVelocity;
     }
 
     private float RotateToMouse()
