@@ -330,9 +330,14 @@ MonoBehaviour:
   windSpeed: 1.5
   WindAngleDEG: 0
   windVelocity: {x: 0, y: 0}
-  waitMin: 5
-  waitMax: 10
+  directionWaitMin: 20
+  directionWaitMax: 30
+  windWaitMin: 3
+  windWaitMax: 6
   windNeedle: {fileID: 1277205510}
+  winds:
+  - {fileID: 470065690274994272, guid: 402c5e6166c7b0c429ed96f3524a9b8f, type: 3}
+  - {fileID: 470065690274994272, guid: 0f2e45f376f5b8f4eb66913c8f95a5f4, type: 3}
 --- !u!1 &1040182849
 GameObject:
   m_ObjectHideFlags: 0
@@ -698,7 +703,8 @@ PrefabInstance:
       value: ForestSeamless MR
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 5945214561067747427, guid: 05cd2b0e976c82b47b021eba66bf05d0, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4837948290323546913, guid: 05cd2b0e976c82b47b021eba66bf05d0, type: 3}
@@ -723,7 +729,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6416304479155313193, guid: 95d633d645fee924382d6dc29a770483, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.51
       objectReference: {fileID: 0}
     - target: {fileID: 6416304479155313193, guid: 95d633d645fee924382d6dc29a770483, type: 3}
       propertyPath: m_LocalRotation.w

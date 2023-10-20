@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 public class BirdFlyingBehavior : MonoBehaviour
 {
     //Privates
-    private enum PlayerState { following, idling, stopped};
+    public enum PlayerState { following, idling, inNest };
     // Start is called before the first frame update
     [SerializeField]
     private Vector3 velocity;
@@ -21,8 +21,8 @@ public class BirdFlyingBehavior : MonoBehaviour
     [SerializeField]
     private float idleCirclingRange;
     [SerializeField]
-    private PlayerState playerState;
-    
+    private PlayerState currentState;
+
     private float idleAngle = 0;
     private Vector3 mousePos;
     private Vector3 lastMousePos;
@@ -33,9 +33,10 @@ public class BirdFlyingBehavior : MonoBehaviour
         get { return velocity; }
         private set { velocity = value; }
     }
+    public PlayerState CurrentState { get; private set; }
     void Start()
     {
-        playerState = PlayerState.following;
+        currentState = PlayerState.following;
     }
 
     // Update is called once per frame
@@ -44,7 +45,7 @@ public class BirdFlyingBehavior : MonoBehaviour
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0;
         target = mousePos;
-        switch (playerState)
+        switch (currentState)
         {
             case PlayerState.following:
                 FollowTarget(RotateToMouse());
@@ -55,13 +56,20 @@ public class BirdFlyingBehavior : MonoBehaviour
                 SetIdleTarget();
                 FollowTarget(RotateToMouse());
                 break;
+            case PlayerState.inNest:
+                if(Input.GetMouseButtonDown(0))
+                {
+                    currentState = PlayerState.following;
+                }
+                velocity = (Vector3)WindManager.Instance.WindVelocity;
+                return;
 
         }
         if (CheckForIdling())
-            playerState = PlayerState.idling;
+            currentState = PlayerState.idling;
         else
         {
-            playerState = PlayerState.following;
+            currentState = PlayerState.following;
             idleAngle = 0;
         }
         lastMousePos = mousePos;
@@ -71,8 +79,7 @@ public class BirdFlyingBehavior : MonoBehaviour
 
     private void FollowTarget(float angle)
     {
-        GameObject windManager = GameObject.FindWithTag("GameManager");
-        velocity = new Vector3(Mathf.Cos(Mathf.Deg2Rad * angle) * speed, Mathf.Sin(Mathf.Deg2Rad * angle) * speed)+(Vector3)windManager.GetComponent<WindManager>().WindVelocity;
+        velocity = new Vector3(Mathf.Cos(Mathf.Deg2Rad * angle) * speed, Mathf.Sin(Mathf.Deg2Rad * angle) * speed) + (Vector3)WindManager.Instance.WindVelocity;
     }
 
     private float RotateToMouse()
@@ -87,14 +94,22 @@ public class BirdFlyingBehavior : MonoBehaviour
         if ((Mathf.Abs(mousePos.x - lastMousePos.x) > 1e-9) || (Mathf.Abs(mousePos.y - lastMousePos.y) > 1e-9))
             return false;
 
-        if ((target - transform.position).magnitude >= idleRange&&(playerState != PlayerState.idling))
+        if ((target - transform.position).magnitude >= idleRange && (currentState != PlayerState.idling))
             return false;
 
         return true;
     }
     private void SetIdleTarget()
     {
-        
-       target += new Vector3(Mathf.Cos(Mathf.Deg2Rad * idleAngle) * idleCirclingRange, Mathf.Sin(Mathf.Deg2Rad * idleAngle) * idleCirclingRange);
+
+        target += new Vector3(Mathf.Cos(Mathf.Deg2Rad * idleAngle) * idleCirclingRange, Mathf.Sin(Mathf.Deg2Rad * idleAngle) * idleCirclingRange);
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.transform.CompareTag("Nest"))
+        {
+            currentState = PlayerState.inNest;
+
+        }
     }
 }
