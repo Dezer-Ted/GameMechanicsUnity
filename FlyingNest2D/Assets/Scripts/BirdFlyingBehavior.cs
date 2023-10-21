@@ -107,10 +107,15 @@ public class BirdFlyingBehavior : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.transform.CompareTag("Nest"))
+        if (collision.transform.CompareTag("Nest"))
         {
             currentState = PlayerState.inNest;
 
         }
+        else if (collision.transform.CompareTag("Food"))
+        {
+            gameObject.GetComponent<BirdInventory>().FoodCount += 1;
+            Destroy(collision.transform.gameObject);
+        }
     }
-}
+} 
