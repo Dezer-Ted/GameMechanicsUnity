@@ -22,6 +22,8 @@ public class BirdFlyingBehavior : MonoBehaviour
     private float idleCirclingRange;
     [SerializeField]
     private PlayerState currentState;
+    [SerializeField]
+    GameObject staminaBar;
 
     private float idleAngle = 0;
     private Vector3 mousePos;
@@ -60,6 +62,7 @@ public class BirdFlyingBehavior : MonoBehaviour
                 if(Input.GetMouseButtonDown(0))
                 {
                     currentState = PlayerState.following;
+                    staminaBar.SetActive(true);
                 }
                 RotateToMouse();
                 velocity = (Vector3)WindManager.Instance.WindVelocity/1.5f;
@@ -109,17 +112,24 @@ public class BirdFlyingBehavior : MonoBehaviour
     {
         if (collision.transform.CompareTag("Nest"))
         {
-            if(gameObject.GetComponent<BirdInventory>().FoodCount != 0)
-            {
-                GameManager.Instance.Score = gameObject.GetComponent<BirdInventory>().FoodCount * 100;
-            }
-            currentState = PlayerState.inNest;
-
+            EnterNest();
         }
         else if (collision.transform.CompareTag("Food"))
         {
             gameObject.GetComponent<BirdInventory>().FoodCount += 1;
             Destroy(collision.transform.gameObject);
         }
+    }
+
+    private void EnterNest()
+    {
+        if (gameObject.GetComponent<BirdInventory>().FoodCount != 0)
+        {
+            GameManager.Instance.Score = gameObject.GetComponent<BirdInventory>().FoodCount * 100;
+            gameObject.GetComponent<BirdInventory>().FoodCount = 0;
+        }
+        gameObject.GetComponent<BirdStamina>().ResetStamina();
+        currentState = PlayerState.inNest;
+        staminaBar.SetActive(false);
     }
 } 
