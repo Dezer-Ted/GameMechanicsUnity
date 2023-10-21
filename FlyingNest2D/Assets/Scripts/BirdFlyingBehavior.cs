@@ -109,6 +109,10 @@ public class BirdFlyingBehavior : MonoBehaviour
     {
         if (collision.transform.CompareTag("Nest"))
         {
+            if(gameObject.GetComponent<BirdInventory>().FoodCount != 0)
+            {
+                GameManager.Instance.Score = gameObject.GetComponent<BirdInventory>().FoodCount * 100;
+            }
             currentState = PlayerState.inNest;
 
         }

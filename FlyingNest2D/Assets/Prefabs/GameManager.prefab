@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5839218686881900896}
   - component: {fileID: 7111873044208251352}
   - component: {fileID: 7977669214108535678}
+  - component: {fileID: 5907157099148745264}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -73,3 +74,15 @@ MonoBehaviour:
   spawnRange: 15
   minSpawnCooldown: 5
   maxSpawnCooldown: 10
+--- !u!114 &5907157099148745264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3896524845721605449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: debd1d127f1203c43a4e25a4c9dd4632, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
