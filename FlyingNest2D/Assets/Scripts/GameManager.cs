@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 
@@ -7,8 +9,12 @@ public class GameManager : MonoBehaviour
 {
     // Start is called before the first frame update
     private int score;
+    private int oldScore;
+    Coroutine counter;
     [SerializeField]
     GameObject scoreText;
+    [SerializeField]
+    float countDuration;
 
     private static GameManager instance = null;
     public static GameManager Instance { get { return instance; } private set { instance = value; } }
@@ -16,8 +22,12 @@ public class GameManager : MonoBehaviour
         get { return score; }
         set 
         {
+            
+            oldScore = score;
             score = value;
-            scoreText.GetComponent<TextMeshProUGUI>().text = "Score: " + score.ToString();
+            if (counter != null)
+                StopCoroutine(counter);
+            counter = StartCoroutine(CountTo());
         }
     }
     void Start()
@@ -30,11 +40,17 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+        oldScore = score;
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator CountTo()
     {
-        
+        var rate = Mathf.Abs(oldScore - score) / countDuration;
+        while(score != oldScore)
+        {
+            oldScore = (int)Mathf.MoveTowards(oldScore, score, rate * Time.deltaTime);
+            scoreText.GetComponent<TextMeshProUGUI>().text = "Score: "+ oldScore.ToString();
+            yield return null;
+        }
     }
 }

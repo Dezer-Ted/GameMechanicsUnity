@@ -848,8 +848,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 61}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -2.8359, y: 61}
+  m_SizeDelta: {x: 407.0235, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1713465763
 MonoBehaviour:
@@ -1026,6 +1026,10 @@ PrefabInstance:
       propertyPath: scoreText
       value: 
       objectReference: {fileID: 1713465761}
+    - target: {fileID: 5907157099148745264, guid: f216bdf6d93fd6c48b3899b51c06e449, type: 3}
+      propertyPath: countDuration
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7111873044208251352, guid: f216bdf6d93fd6c48b3899b51c06e449, type: 3}
       propertyPath: windNeedle
       value: 
