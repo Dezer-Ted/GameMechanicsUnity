@@ -125,7 +125,7 @@ public class BirdFlyingBehavior : MonoBehaviour
     {
         if (gameObject.GetComponent<BirdInventory>().FoodCount != 0)
         {
-            GameManager.Instance.Score = gameObject.GetComponent<BirdInventory>().FoodCount * 100;
+            GameManager.Instance.Score += gameObject.GetComponent<BirdInventory>().FoodCount * 100;
             gameObject.GetComponent<BirdInventory>().FoodCount = 0;
         }
         gameObject.GetComponent<BirdStamina>().ResetStamina();

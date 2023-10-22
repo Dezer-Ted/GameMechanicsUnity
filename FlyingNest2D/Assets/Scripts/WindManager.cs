@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class WindManager : MonoBehaviour
 {
     [SerializeField]
     float windSpeed;
     [SerializeField]
-    float WindAngleDEG;
+    float windAngleDEG;
     [SerializeField]
     Vector2 windVelocity;
     [SerializeField]
@@ -16,9 +17,15 @@ public class WindManager : MonoBehaviour
     RectTransform windNeedle;
     [SerializeField]
     List<GameObject> winds;
+    [SerializeField]
+    float turningSpeed;
 
+
+    private bool isTurning;
+    private float desiredAngle;
     private static WindManager instance = null;
     GameObject currentWindVFX;
+    Coroutine windRotator;
     public Vector2 WindVelocity
     {
         get { return windVelocity; }
@@ -44,20 +51,30 @@ public class WindManager : MonoBehaviour
         //WindAngleDEG = Random.Range(0, 360);
         //windVelocity = new Vector2(Mathf.Cos(WindAngleDEG * Mathf.Deg2Rad) * windSpeed, Mathf.Sin(WindAngleDEG * Mathf.Deg2Rad) * windSpeed);
         RandomizeWindDirection();
-        StartCoroutine(WaitForWindDirection());
+        //StartCoroutine(WaitForWindDirection());
         StartCoroutine(WaitForWindVFX());
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(isTurning)
+        {
+            windAngleDEG = Mathf.MoveTowardsAngle(windAngleDEG,desiredAngle,turningSpeed*Time.deltaTime);
+            windVelocity = new Vector2(Mathf.Cos(windAngleDEG * Mathf.Deg2Rad) * windSpeed, Mathf.Sin(windAngleDEG * Mathf.Deg2Rad) * windSpeed);
+            windNeedle.transform.rotation = Quaternion.Euler(windNeedle.transform.eulerAngles.x, windNeedle.transform.eulerAngles.y, windAngleDEG - 90);
+            if (windAngleDEG<0)
+            {
+                windAngleDEG = 360 - Mathf.Abs(windAngleDEG);
+            }
+            if (windAngleDEG == desiredAngle)
+                isTurning = false;
+        }
     }
     IEnumerator WaitForWindDirection()
     {
         yield return new WaitForSeconds(Random.Range(directionWaitMin, directionWaitMax));
         RandomizeWindDirection();
-        StartCoroutine(WaitForWindDirection());
 
     }
     IEnumerator WaitForWindVFX()
@@ -69,10 +86,13 @@ public class WindManager : MonoBehaviour
     }
     void RandomizeWindDirection()
     {
-        WindAngleDEG = Random.Range(0, 360);
-        windVelocity = new Vector2(Mathf.Cos(WindAngleDEG * Mathf.Deg2Rad) * windSpeed, Mathf.Sin(WindAngleDEG * Mathf.Deg2Rad) * windSpeed);
-        windNeedle.transform.rotation = Quaternion.Euler(windNeedle.transform.eulerAngles.x, windNeedle.transform.eulerAngles.y, WindAngleDEG-90);
-        UpdateWindVFX();
+        desiredAngle = Random.Range(0, 360);
+        
+        isTurning = true;
+        //if (windRotator != null)
+        //    StopCoroutine(windRotator);
+        //windRotator = StartCoroutine(RotateWind(newAngle));
+        StartCoroutine(WaitForWindDirection());
     }
     void UpdateWindVFX()
     {
@@ -84,9 +104,9 @@ public class WindManager : MonoBehaviour
             );
 
         if(Random.Range(0,10)>=7)
-            currentWindVFX = Instantiate(winds[1], windPos, Quaternion.Euler(new Vector3(0,0,WindAngleDEG)));
+            currentWindVFX = Instantiate(winds[1], windPos, Quaternion.Euler(new Vector3(0,0,windAngleDEG)));
         else
-            currentWindVFX = Instantiate(winds[0], windPos, Quaternion.Euler(new Vector3(0, 0, WindAngleDEG)));
+            currentWindVFX = Instantiate(winds[0], windPos, Quaternion.Euler(new Vector3(0, 0, windAngleDEG)));
 
     }
 }
