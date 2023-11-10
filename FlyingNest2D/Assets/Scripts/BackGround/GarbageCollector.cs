@@ -21,5 +21,9 @@ public class GarbageCollector : MonoBehaviour
         {
             Destroy(collision.gameObject);
         }
+        else if(collision.transform.CompareTag("Enemy"))
+        {
+            Destroy(collision.gameObject);
+        }
     }
 }

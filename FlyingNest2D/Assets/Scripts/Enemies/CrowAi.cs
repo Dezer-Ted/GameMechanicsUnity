@@ -131,7 +131,7 @@ public class CrowAi : MonoBehaviour
             return;
 
         var player = GameObject.FindGameObjectWithTag("Player");
-        Vector3 newDirection = (transform.position - player.transform.position);
+        Vector3 newDirection = (  player.transform.position- transform.position);
         newDirection.Normalize();
         currentDirection = newDirection;
         isCharging = true;
