@@ -555,7 +555,69 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8997282678713832888, guid: 54da9120d7c88f74eb582d44adc54993, type: 3}
   m_PrefabInstance: {fileID: 1825615611513767583}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &571013317
+--- !u!58 &571013319
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 571013316}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 9.45
+--- !u!50 &571013320
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 571013316}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &571013323
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -564,10 +626,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 571013316}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f73b151ca1ca98648937e21947ab6b10, type: 3}
+  m_Script: {fileID: 11500000, guid: 262fc2211dec1ed4797ede1e6e8c2072, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 10
+  isAffectedByWind: 1
 --- !u!1 &586405388 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 753241236307557130, guid: 05cd2b0e976c82b47b021eba66bf05d0, type: 3}
@@ -826,6 +888,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3412509945341285617, guid: 54da9120d7c88f74eb582d44adc54993, type: 3}
+      propertyPath: maxTimeToChange
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6498780892533728586, guid: 54da9120d7c88f74eb582d44adc54993, type: 3}
       propertyPath: m_Name
       value: Beak
@@ -834,13 +900,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: CrowEnemy
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4392587777996490498, guid: 54da9120d7c88f74eb582d44adc54993, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8997282678713832888, guid: 54da9120d7c88f74eb582d44adc54993, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 571013317}
+      addedObject: {fileID: 571013320}
+    - targetCorrespondingSourceObject: {fileID: 8997282678713832888, guid: 54da9120d7c88f74eb582d44adc54993, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 571013319}
+    - targetCorrespondingSourceObject: {fileID: 8997282678713832888, guid: 54da9120d7c88f74eb582d44adc54993, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 571013323}
   m_SourcePrefab: {fileID: 100100000, guid: 54da9120d7c88f74eb582d44adc54993, type: 3}
 --- !u!1001 &3577795587782838251
 PrefabInstance:

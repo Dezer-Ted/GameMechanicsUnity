@@ -119,6 +119,10 @@ public class BirdFlyingBehavior : MonoBehaviour
             gameObject.GetComponent<BirdInventory>().FoodCount += 1;
             Destroy(collision.transform.gameObject);
         }
+        else if(collision.transform.CompareTag("Enemy"))
+        {
+            collision.GetComponent<CrowAi>().SetState(CrowAi.EnemyState.hunting);
+        }
     }
 
     private void EnterNest()
