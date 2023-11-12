@@ -8,22 +8,12 @@ public class ScrollingObject : MonoBehaviour
 
     [SerializeField]
     bool isAffectedByWind;
-    
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     protected virtual void Update()
     {
         ApplyBirdMovement();
-
-
     }
-
+    //Moves the Object in relation to the player
+    //optionally can include the wind velocity
     private void ApplyBirdMovement()
     {
         scrollingVelocity = GameObject.FindGameObjectWithTag("Player").GetComponent<BirdFlyingBehavior>().Velocity;

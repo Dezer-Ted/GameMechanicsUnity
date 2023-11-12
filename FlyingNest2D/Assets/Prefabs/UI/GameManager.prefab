@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3896524845721605449
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5839218686881900896}
+  - component: {fileID: 7111873044208251352}
+  - component: {fileID: 7977669214108535678}
+  - component: {fileID: 5907157099148745264}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: GameManager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5839218686881900896
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3896524845721605449}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7111873044208251352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3896524845721605449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 425f0a9f88452cf45b6241ea3edddb90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  windSpeed: 1.5
+  WindAngleDEG: 0
+  windVelocity: {x: 0, y: 0}
+  directionWaitMin: 20
+  directionWaitMax: 30
+  windWaitMin: 3
+  windWaitMax: 6
+  windNeedle: {fileID: 0}
+  winds:
+  - {fileID: 8810994592910977396, guid: bb79d5e26079bc449a794f2b10c1b933, type: 3}
+  - {fileID: 8472803060765357484, guid: f96ebcb32c62c0b4d944249b7cbac1c4, type: 3}
+--- !u!114 &7977669214108535678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3896524845721605449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 274641d75c4691b4e8ae4af6ccfbf1a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  possibleFood:
+  - {fileID: 4571204079929355903, guid: 10fd980ceb0fe0e4e978df24c3fd643a, type: 3}
+  spawnRange: 15
+  minSpawnCooldown: 5
+  maxSpawnCooldown: 10
+--- !u!114 &5907157099148745264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3896524845721605449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: debd1d127f1203c43a4e25a4c9dd4632, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

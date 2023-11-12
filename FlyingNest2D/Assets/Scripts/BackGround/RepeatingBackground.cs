@@ -15,7 +15,6 @@ public class RepeatingBackground : MonoBehaviour
         get { return scrolledDistance; }
         set { scrolledDistance = value; }
     }
-    // Start is called before the first frame update
     void Start()
     {
         width = gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>().bounds.size.x;
@@ -26,8 +25,6 @@ public class RepeatingBackground : MonoBehaviour
         }
         centerStartPos = backgrounds[4].transform.position;
     }
-
-    // Update is called once per frame
     void Update()
     {
         CheckIfOutOfBounds();
@@ -56,9 +53,14 @@ public class RepeatingBackground : MonoBehaviour
     }
 
     //Hardcoded position swapping to keep the array easy to read
-    //  0/1/2
-    //  3/4/5
-    //  6/7/8
+    // 0/1/2
+    // 3/4/5 -->
+    // 6/7/8
+    //When the plattform extends it copies the tiles on the opposing side e.g
+    // 1/2/0
+    // 4/5/3  -->
+    // 7/8/6
+    //The tiles can have a gap which is due to the bad formatting of the image
     void ExpandVertically(bool isExpandingUp)
     {
         List<GameObject> tempList = new List<GameObject>();
@@ -72,7 +74,7 @@ public class RepeatingBackground : MonoBehaviour
             ExpandDown(tempList);
         }
     }
-
+    
     private void ExpandUp(List<GameObject> tempList)
     {
         tempList.Add(backgrounds[0]);
@@ -140,10 +142,7 @@ public class RepeatingBackground : MonoBehaviour
             ExpandLeft(tempList);
         }
     }
-    //Hardcoded position swapping to keep the array easy to read
-    //  2/1/0
-    //  5/4/3
-    //  8/7/6
+  
     private void ExpandRight(List<GameObject> tempList)
     {
         tempList.Add(backgrounds[2]);

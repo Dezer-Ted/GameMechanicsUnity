@@ -4,17 +4,8 @@ using UnityEngine;
 
 public class GarbageCollector : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
+    //Destroys anyobject that enters the trigger to keep the performance up
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.transform.CompareTag("Food"))

@@ -8,6 +8,8 @@ TagManager:
   - GameManager
   - Nest
   - Food
+  - Enemy
+  - EnemyHit
   layers:
   - Default
   - TransparentFX

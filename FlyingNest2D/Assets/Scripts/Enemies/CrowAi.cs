@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -14,7 +15,6 @@ public class CrowAi : MonoBehaviour
     }
     [SerializeField]
     EnemyState currentState = EnemyState.wandering;
-    Vector2 targetPos;
     [SerializeField]
     float currentSpeed = 5;
     [SerializeField]
@@ -35,15 +35,10 @@ public class CrowAi : MonoBehaviour
     bool isCharging = false;
     void Start()
     {
-        targetPos = new Vector2 (0, 0);
-        currentDirection = transform.forward;
-        //StartCoroutine(WanderDirection());
+        currentDirection = - transform.position.normalized; //Locks onto player coordinates so the enemy doesnt just leave
         currentTimeToChange = maxTimeToChange;
         chargeDistance = transform.GetComponent<CircleCollider2D>().radius;
-        NewAngle();
     }
-
-    // Update is called once per frame
     void Update()
     {
         switch(currentState)
@@ -53,35 +48,36 @@ public class CrowAi : MonoBehaviour
                 DirectionalMovement();
                 break;
             case EnemyState.hunting:
-                ChargePlayer();
-                DirectionalMovement();
-                if (traveledDistance.sqrMagnitude > chargeDistance * chargeDistance)
-                {
-                    isCharging = false;
-                    currentCharges++;
-                    traveledDistance = new Vector2 (0, 0);
-                }
-                if (currentCharges >= maxCharges)
-                {
-                    SetState(EnemyState.wandering);
-                    currentCharges = 0;
-                }
+                Hunting();
                 break;
         }
     }
-    void MoveToTarget()
+    //Charges the player in a pattern of multiple attacks
+    //The crow saves the player location and changes its direction to that point while gaining some speed.
+    //The crow charges the player three times before losing interest.
+    private void Hunting()
     {
-        currentDirection = (Vector3)targetPos - transform.position;
-        currentDirection.Normalize();
-        LookAtTarget();
-        transform.position += currentSpeed * Time.deltaTime * currentDirection;
+        ChargePlayer();
+        DirectionalMovement();
+        if (traveledDistance.sqrMagnitude > chargeDistance * chargeDistance)
+        {
+            isCharging = false;
+            currentCharges++;
+            traveledDistance = new Vector2(0, 0);
+        }
+        if (currentCharges >= maxCharges)
+        {
+            SetState(EnemyState.wandering);
+            currentCharges = 0;
+        }
     }
+    
     void LookAtTarget()
     {
         float angle = Vector2.SignedAngle(Vector2.right, currentDirection);
         transform.eulerAngles = new Vector3(0, 0, angle-90);
     }
-
+    //This Movement follows the currentDirection with the currentSpeed
     void DirectionalMovement()
     {
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
@@ -98,10 +94,11 @@ public class CrowAi : MonoBehaviour
         if(currentTimeToChange < 0)
         {
             currentTimeToChange = maxTimeToChange;
-            NewAngle();
+            GetNewAngle();
         }
     }
-    void NewAngle()
+    //Get A Random angle in a 180 degrees window while staying in 360°
+    void GetNewAngle()
     {
         currentAngle = currentAngle + Random.Range(-90, 90);
         if (currentAngle < 0)
@@ -110,7 +107,7 @@ public class CrowAi : MonoBehaviour
             currentAngle = currentAngle - 360;
         currentDirection = new Vector3(Mathf.Cos(currentAngle), Mathf.Sin(currentAngle));
     }
-
+    //Sets the state and adjusts speed accordingly
     public void SetState(EnemyState state)
     {
         switch (state)
@@ -135,5 +132,9 @@ public class CrowAi : MonoBehaviour
         newDirection.Normalize();
         currentDirection = newDirection;
         isCharging = true;
+    }
+    public EnemyState GetState()
+    {
+        return currentState;
     }
 }

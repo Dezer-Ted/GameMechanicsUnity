@@ -16,13 +16,9 @@ public class FoodManager : MonoBehaviour
         SpawnFood();
         StartCoroutine(WaitForSpawnCycle());
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    //Spawns food in circles around the player
+    //The circles have a varying amount of food on them
+    //Takes a random food from the possible foods list 
     void SpawnFood() 
     {
         int spread = Random.Range(3, 6) * 5;
@@ -33,8 +29,8 @@ public class FoodManager : MonoBehaviour
             {
                 pos = new Vector3
                 (
-                    Mathf.Cos(index) * spawnRange,
-                    Mathf.Sin(index) * spawnRange,
+                    Mathf.Cos(index * Mathf.Deg2Rad) * spawnRange,
+                    Mathf.Sin(index * Mathf.Deg2Rad) * spawnRange,
                     -0.5f
                 );
                 Instantiate(possibleFood[Random.Range(0,possibleFood.Count-1)], pos, Quaternion.identity);
